@@ -1,0 +1,33 @@
+<!--
+<ion-navbar *navbar>
+  <button menuToggle>
+    <ion-icon name="menu"></ion-icon>
+  </button>
+  <ion-title>Hello Ionic</ion-title>
+</ion-navbar>-->
+
+
+<ion-content padding class="getting-started">
+
+<form [ngFormModel]="loginForm" (ngSubmit)="login($event)">
+<ion-item>
+  <ion-label floating>Usuario</ion-label>
+  <ion-input type="text" ngControl="usuario"></ion-input>
+</ion-item>
+
+
+<ion-item>
+  <ion-label floating>Contraseña</ion-label>
+  <ion-input type="password" ngControl="contraseña"></ion-input>
+</ion-item>
+
+
+<br>
+<button type="submit" round full default>Entrar</button>
+</form>
+
+<button clear round full secondary (click)="abrirPagina()">Registrarse</button>
+
+
+
+</ion-content>
