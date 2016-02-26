@@ -1,4 +1,4 @@
-import {Page, NavController} from 'ionic/ionic';
+import {Page, NavController, MenuController} from 'ionic/ionic';
 
 /*
   Generated class for the FirstPagePage page.
@@ -10,7 +10,9 @@ import {Page, NavController} from 'ionic/ionic';
   templateUrl: 'build/pages/first-page/first-page.html',
 })
 export class FirstPage {
-  constructor(nav: NavController) {
+  constructor(nav: NavController, menu: MenuController) {
     this.nav = nav;
+    this.menu=menu;
+    this.menu.open()
   }
 }

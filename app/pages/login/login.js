@@ -1,7 +1,9 @@
-import {Page, NavController, Alert} from 'ionic/ionic';
+import {Page, NavController, Alert, Storage, LocalStorage} from 'ionic/ionic';
 import { FORM_DIRECTIVES, FormBuilder,  ControlGroup, Validators, AbstractControl} from 'angular2/common';
 import {Http} from 'angular2/http';
 import {SelectUserPage} from '../select-user/select-user';
+import {FirstPage} from '../first-page/first-page';
+
 
 
 
@@ -19,6 +21,7 @@ export class LoginPage {
 
   	this.nav=nav;
   	this.http=http;
+    this.local=new Storage(LocalStorage);
   	this.loginForm = form.group({
   		usuario: ['', Validators.compose([Validators.required])],
   		contraseña: ["", Validators.required]
@@ -37,8 +40,14 @@ export class LoginPage {
     })
     .subscribe(success => {
     	console.log("BIENNNN");
+      console.log(success);
+      this.local.set('username', user.usuario)
+      //console.log(request.user);
+      //console.log(request.auth);
+      this.nav.setRoot(FirstPage);
     }, error => {
     	console.log("MALLLLL");
+      console.log(error);
     	let alert = Alert.create({
                 title: 'Error de autentificación',
                 subTitle: 'Compruebe que el usuario y contraseña introducidos son los correctos',

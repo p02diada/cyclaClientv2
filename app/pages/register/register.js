@@ -2,6 +2,8 @@ import {Page, NavController, NavParams, Alert} from 'ionic/ionic';
 import { FORM_DIRECTIVES, FormBuilder,  ControlGroup, Validators, AbstractControl} from 'angular2/common';
 import {Http} from 'angular2/http';
 import {FirstPage} from '../first-page/first-page';
+import {LoginPage} from '../login/login';
+
 
 
 /*
@@ -57,13 +59,28 @@ export class RegisterPage {
 
     })
     .subscribe(success => {
-    	console.log("BIENNNN");
-      this.nav.setRoot(FirstPage);
+      /*
+      let alert = Alert.create({
+                title: 'Usuario creado',
+                subTitle: 'Ahora puede iniciar sesión con su usuario y contraseña',
+                buttons: [
+                {
+                  text: 'Ok',
+                  handler: data => {
+                    this.nav.popToRoot();
+                  }
+                },
+                ]
+            });
+      this.nav.present(alert);*/
+
+      this.nav.setRoot(LoginPage);
     }, error => {
     	console.log("MALLLLL");
+      console.log(error);
     	let alert = Alert.create({
-                title: 'Error de autentificación',
-                subTitle: 'Compruebe que el usuario y contraseña introducidos son los correctos',
+                title: 'Error al crear el usuario',
+                subTitle: 'Pruebe a introducir otro nombre de usuario',
                 buttons: ['Ok']
             });
             this.nav.present(alert);
@@ -78,7 +95,8 @@ export class RegisterPage {
 
     })
     .subscribe(success => {
-      console.log("BIENNNN");
+      this.nav.setRoot(LoginPage);
+      
     }, error => {
       console.log("MALLLLL");
       let alert = Alert.create({

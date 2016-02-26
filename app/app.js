@@ -2,10 +2,11 @@ import {App, IonicApp, Platform} from 'ionic/ionic';
 import {HomePage} from './pages/home/home';
 import {LoginPage} from './pages/login/login';
 import {SelectUserPage} from './pages/select-user/select-user';
+import {NewDeliveryPage} from './pages/new-delivery/new-delivery';
 
 
 @App({
-  template: '<ion-nav [root]="rootPage"></ion-nav>',
+  templateUrl: 'build/app.html',
   //ESTO NO ESTA IGUALLLL
   config: {} // http://ionicframework.com/docs/v2/api/config/Config/
 })
@@ -18,7 +19,8 @@ export class MyApp {
 
     this.pages=[
       {title: 'Login', component: LoginPage },
-      {title: 'Select User', component: SelectUserPage}
+      {title: 'Select User', component: SelectUserPage},
+      {title: 'Públicar Envío', component: NewDeliveryPage}
     ];
 
     this.rootPage = LoginPage;
@@ -48,6 +50,16 @@ export class MyApp {
       }
     });
   }
+
+  openPage(page) {
+    // close the menu when clicking a link from the menu
+    this.app.getComponent('leftMenu').close();
+    // navigate to the new page if it is not the current page
+    let nav = this.app.getComponent('nav');
+    nav.setRoot(page.component);
+  }
+
+
 
 
 
