@@ -1,6 +1,6 @@
 import {Page, NavController, Storage, LocalStorage} from 'ionic/ionic';
 import { FORM_DIRECTIVES, FormBuilder,  ControlGroup, Validators, AbstractControl} from 'angular2/common';
-import {Http} from 'angular2/http';
+import {Http, Headers} from 'angular2/http';
 
 /*
   Generated class for the NewDeliveryPage page.
@@ -60,6 +60,7 @@ cargarMapa(){
 
 registro(){
 	var datos=this.anuncioForm.value;
+  var id_usuario=this.local.get('id_usuario')._result;  
 	console.log(datos.descripcion);
   console.log(datos.direccionInicial);
   console.log(datos.direccionFinal);
@@ -80,17 +81,11 @@ registro(){
 
 
       var latitudPuntoInicial=results[0].geometry.location.lat();
-      anuncio["latitudPuntoInicial"]=latitudPuntoInicial;
+      //anuncio["latitudPuntoInicial"]=latitudPuntoInicial;
 
 
       var longitudPuntoInicial=results[0].geometry.location.lng();
-      anuncio["longitudPuntoInicial"]=longitudPuntoInicial;
-
-
-      } else {
-        alert("Geocode was not successful for the following reason: " + status);
-      }
-    });
+     // anuncio["longitudPuntoInicial"]=longitudPuntoInicial;
 
     geocoder.geocode( { 'address': addressFinal}, function(results, status) {
       if (status == google.maps.GeocoderStatus.OK) {
@@ -100,11 +95,12 @@ registro(){
             position: results[0].geometry.location
         });
       var latitudPuntoFinal=results[0].geometry.location.lat();
-      anuncio["latitudPuntoFinal"]=latitudPuntoFinal;
+      //anuncio["latitudPuntoFinal"]=latitudPuntoFinal;
 
 
       var longitudPuntoFinal=results[0].geometry.location.lng();
-      anuncio["longitudPuntoFinal"]=longitudPuntoFinal;
+      datos="remitente="+id_usuario+"&descripcion="+datos.descripcion+"&latitudPuntoInicial="+latitudPuntoInicial+"&longitudPuntoInicial="+longitudPuntoInicial+"&latitudPuntoFinal="+latitudPuntoFinal+"&longitudPuntoFinal="+longitudPuntoFinal;
+      //anuncio["longitudPuntoFinal"]=longitudPuntoFinal;
         //console.log(results[0].geometry.location);
         //console.log(results[0].geometry.location.lat());
         
@@ -114,37 +110,47 @@ registro(){
       }
     });
 
-    var username=this.local.get('username')._result;
-    var anuncio={
-      "remitente": username,
-      "descripcion": datos.descripcion,
-    };
-
-  console.log(anuncio);
-  var prueba = {
-    "remitente": "111",
-    "descripcion": "la que sea",
-    "latitudPuntoInicial": 40.4167754,
-    "longitudPuntoInicial": -3.7037901999999576,
-    "latitudPuntoFinal": 40.4167754,
-    "longitudPuntoFinal": -3.7037901999999576,
 
 
-  }
-  datos="remitente="+"2"+"&descripcion="+"la que sea"+"&latitudPuntoInicial="+"40.4167754"+"&longitudPuntoInicial="+"-3.7037901999999576"+"&latitudPuntoFinal="+"40.4167754"+"&longitudPuntoFinal="+"-3.7037901999999576";
-  this.http.post('http://127.0.0.1:8000/envios/crearAnuncio/',datos , {
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Authorization': 'Token ' + 'e31e642fa2aa05743309a9a4deef815302c6c287',
+      } else {
+        alert("Geocode was not successful for the following reason: " + status);
       }
+    });
+
+
+
+  setTimeout(()=>{
+    this.enviarDatosAnuncio(datos);
+
+  }, 500);
+
+  
+
+}
+
+enviarDatosAnuncio(datos){
+  console.log("Enviando datos");
+  console.log(datos);
+  var token=this.local.get('token')._result; 
+  var headers= new Headers();
+  headers.append('Content-Type', 'application/x-www-form-urlencoded');
+  headers.append('Authorization', 'Token '+token);
+  //headers.append('Access-Control-Allow-Origin','*');
+  //headers.append('Access-Control-Allow-Headers','Content-Type');
+
+
+
+  this.http.post('http://127.0.0.1:8000/envios/crearAnuncio/',datos , {
+      headers: headers
 
     })
     .subscribe(success => {
-      console.log(anuncio);
+      //console.log(anuncio);
       console.log("BIENNN");
       console.log(success);
+      
     }, error => {
-      console.log(anuncio);
+      //console.log(anuncio);
       console.log("MALLLLL");
       console.log(error);
 
@@ -152,5 +158,6 @@ registro(){
 }
 
 
+}
 
 }

@@ -1,0 +1,39 @@
+<!--
+  Generated template for the ListDeliveriesPage page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-navbar *navbar>
+  <ion-title>list-deliveries</ion-title>
+</ion-navbar>
+
+<ion-content class="list-deliveries components-demo cards-bg">
+
+
+<ion-card  *ngFor="#anuncio of listaAnuncios" class="adv-map">
+  <div style="position: relative">
+    <!--
+    <button secondary fab fab-right fab-top class="fab-map">
+      <ion-icon name='pin'></ion-icon>
+    </button>-->
+  </div>
+
+ 
+  	<ion-card-content>
+    <!--<ion-icon subtle large item-left name='leaf'></ion-icon>-->
+    <p>{{anuncio.descripcion}}</p>
+    </ion-card-content>
+   
+
+  <ion-item actions>
+    <span item-left secondary class="item-bold">26 km</span>
+    <button secondary clear item-right>
+      <ion-icon name='navigate'></ion-icon>
+      Ofertar
+    </button>
+  </ion-item>
+
+</ion-card>
+  
+</ion-content>
