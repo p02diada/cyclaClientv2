@@ -16,17 +16,39 @@ export class ListDeliveriesPage {
     this.http=http;
     this.local=new Storage(LocalStorage);
     this.listaAnuncios=[];
-    this.cargarLista();
+    //this.latitude;
+    //this.longitude;
+    this.getPosition();
+    //this.cargarLista();
+
 
   }
 
-  cargarLista(){
+  getPosition(){
 
+	navigator.geolocation.getCurrentPosition(
+		(position)=>{
+      console.log(position.coords.latitude)
+      console.log(position.coords.longitude)
+			this.cargarLista(position.coords.latitude,position.coords.longitude);
+		},
+		(error)=>{
+			console.log(error);
+		}
+	);
+   
+
+  }
+
+  cargarLista(latitude,longitude){
+
+  datos="latitude="+latitude+"&longitude="+longitude;
+  console.log(datos)
   var token=this.local.get('token')._result; 
   var headers= new Headers();
   headers.append('Content-Type', 'application/x-www-form-urlencoded');
   headers.append('Authorization', 'Token '+token);
-  this.http.post('http://127.0.0.1:8000/envios/getAnuncios/',{
+  this.http.post('http://127.0.0.1:8000/envios/getAnuncios/',datos,{
   	headers:headers
   })
   .subscribe(success =>{
