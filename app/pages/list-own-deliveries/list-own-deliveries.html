@@ -1,5 +1,5 @@
 <!--
-  Generated template for the ListDeliveriesPage page.
+  Generated template for the ListOwnDeliveriesPage page.
 
   See http://ionicframework.com/docs/v2/components/#navigation for more info on
   Ionic pages and navigation.
@@ -8,11 +8,10 @@
   <button menuToggle>
     <ion-icon name="menu"></ion-icon>
   </button>
-  <ion-title>Lista de Envíos</ion-title>
+  <ion-title>Mis Anuncios</ion-title>
 </ion-navbar>
 
-<ion-content class="list-deliveries components-demo cards-bg">
-
+<ion-content padding class="list-own-deliveries">
 
 <ion-card  *ngFor="#anuncio of listaAnuncios" class="adv-map">
   <div style="position: relative">
@@ -30,10 +29,10 @@
    
 
   <ion-item actions>
-    <span item-left secondary class="item-bold">26 km</span>
-    <button secondary clear item-right (click)="ofertar(anuncio)">
+    <span item-left secondary class="item-bold" >26 km</span>
+    <button secondary clear item-right (click)="verOfertas(anuncio)">
       <ion-icon name='navigate'></ion-icon>
-      Ofertar
+      Ver Ofertas
     </button>
   </ion-item>
 

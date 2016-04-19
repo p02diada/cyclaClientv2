@@ -4,7 +4,8 @@ import {LoginPage} from './pages/login/login';
 import {SelectUserPage} from './pages/select-user/select-user';
 import {NewDeliveryPage} from './pages/new-delivery/new-delivery';
 import {ListDeliveriesPage} from './pages/list-deliveries/list-deliveries';
-
+import {NewBidPage} from './pages/new-bid/new-bid';
+import {ListOwnDeliveriesPage} from './pages/list-own-deliveries/list-own-deliveries';
 
 @App({
   templateUrl: 'build/app.html',
@@ -25,6 +26,8 @@ export class MyApp {
       {title: 'Select User', component: SelectUserPage, hide: true},
       {title: 'Públicar Envío', component: NewDeliveryPage, hide:false},
       {title: 'Lista de Anuncios', component: ListDeliveriesPage, hide:false},
+      //{title: 'Nueva oferta', component: NewBidPage, hide:false}
+      {title: 'Mis Anuncios', component: ListOwnDeliveriesPage, hide:false}
     ];
 
     this.rootPage = LoginPage;
@@ -66,10 +69,14 @@ export class MyApp {
       
       
       this.findMenuItemByTitle('Públicar Envío').hide = false;
+      this.findMenuItemByTitle('Lista de Anuncios').hide = true;
 
     } else {
       
-      this.findMenuItemByTitle('Login').hide = false;
+      this.findMenuItemByTitle('Login').hide = true;
+      this.findMenuItemByTitle('Públicar Envío').hide = true;
+      this.findMenuItemByTitle('Mis Anuncios').hide = true;
+
 
     }
   }

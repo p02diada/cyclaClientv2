@@ -1,5 +1,6 @@
 import {Page, NavController, Storage, LocalStorage} from 'ionic/ionic';
 import {Http, Headers} from 'angular2/http';
+import {NewBidPage} from '../new-bid/new-bid';
 
 /*
   Generated class for the ListDeliveriesPage page.
@@ -16,8 +17,6 @@ export class ListDeliveriesPage {
     this.http=http;
     this.local=new Storage(LocalStorage);
     this.listaAnuncios=[];
-    //this.latitude;
-    //this.longitude;
     this.getPosition();
     //this.cargarLista();
 
@@ -60,4 +59,12 @@ export class ListDeliveriesPage {
   }
 
   }
+
+  ofertar(anuncio){
+    console.log(anuncio);
+    this.nav.push(NewBidPage,{
+      anuncio:anuncio,
+    });
+  }
+
 }
