@@ -9,5 +9,33 @@
 </ion-navbar>
 
 <ion-content padding class="bids-for-delivery">
+	<ion-list   >
+
+
+
+	<ion-item *ngFor="#oferta of ofertas">
+
+  			<h2>{{oferta.precio}} Euros</h2>
+			<p>{{oferta.username}}</p>
+			<p>
+			{{oferta.valoracionMedia}}
+			</p>
+			
+			<button item-right (click)="aceptarOferta(oferta)">
+			Aceptar
+			</button>
+		
+	</ion-item>
+
+
+
+
+
+
+
+		
+
+
+	</ion-list>
   
 </ion-content>

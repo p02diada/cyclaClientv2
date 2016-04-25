@@ -33,10 +33,39 @@ export class BidsForDeliveryPage {
   })
   .subscribe(success =>{
   	console.log(success);
-  	this.listaAnuncios=success.json();
-  	console.log(this.listaAnuncios);
+  	lista=success.json();
+    this.ofertas=lista.listaOfertas;
+    datosCiclistas=lista.listaDatosCiclista;
+    for(i=0;i<this.ofertas.length;i++)
+    {
+      this.ofertas[i].username=datosCiclistas[i].username;
+      this.ofertas[i].valoracionMedia=datosCiclistas[i].valoracionMedia;
+    }
+    console.log(this.ofertas);
+
+
   }), error => {
   	console.log(error);
+  }
+
+  }
+
+  aceptarOferta(oferta){
+    console.log(oferta);
+    var token=this.local.get('token')._result;
+    var datos="id_anuncio="+oferta.anuncio+"&id_oferta="+oferta.pk;
+    var headers= new Headers();
+    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+    headers.append('Authorization', 'Token '+token); 
+    this.http.post('http://127.0.0.1:8000/envios/aceptarOferta/',datos,{
+      headers:headers
+    })
+  .subscribe(success =>{
+    console.log("bien");
+
+
+  }), error => {
+    console.log(error);
   }
 
   }
