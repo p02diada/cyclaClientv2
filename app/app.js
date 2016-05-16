@@ -6,6 +6,8 @@ import {NewDeliveryPage} from './pages/new-delivery/new-delivery';
 import {ListDeliveriesPage} from './pages/list-deliveries/list-deliveries';
 import {NewBidPage} from './pages/new-bid/new-bid';
 import {ListOwnDeliveriesPage} from './pages/list-own-deliveries/list-own-deliveries';
+import {SendingListRemitentePage} from './pages/sending-list-remitente/sending-list-remitente';
+import {Http, Headers} from 'angular2/http';
 
 @App({
   templateUrl: 'build/app.html',
@@ -28,6 +30,7 @@ export class MyApp {
       {title: 'Lista de Anuncios', component: ListDeliveriesPage, hide:false},
       //{title: 'Nueva oferta', component: NewBidPage, hide:false}
       {title: 'Mis Anuncios', component: ListOwnDeliveriesPage, hide:false}
+      {title: 'Envíos', component: SendingListRemitentePage, hide:false}
     ];
 
     this.rootPage = LoginPage;
@@ -42,8 +45,28 @@ export class MyApp {
       if (window.StatusBar) {
         window.StatusBar.styleDefault();
       }
+/*
+      var timer= setInterval(function(){
+        function geo_success(position) {
+          console.log(position.coords.latitude, position.coords.longitude);
+        }
+
+        function geo_error() {
+          alert("Sorry, no position available.");
+        }
+
+        var geo_options = {
+          enableHighAccuracy: true, 
+          maximumAge        : 0, 
+          timeout           : 50000
+        };
+
+        var wpid = navigator.geolocation.getCurrentPosition(geo_success, geo_error, geo_options);
+
+      },5000);*/
     });
   }
+
 
   openPage(page) {
     // close the menu when clicking a link from the menu
@@ -76,6 +99,7 @@ export class MyApp {
       this.findMenuItemByTitle('Login').hide = true;
       this.findMenuItemByTitle('Públicar Envío').hide = true;
       this.findMenuItemByTitle('Mis Anuncios').hide = true;
+      this.findMenuItemByTitle('Envíos').hide = true;
 
 
     }
