@@ -53,7 +53,7 @@ export class LoginPage {
 
       data=success.json();
       this.local.set('id_usuario', data.id_usuario);
-      this.actualizarPosicion();
+      
     });
 
      this.http.get("http://127.0.0.1:8000/usuarios/getTipoUsuario/"+user.usuario+"/")
@@ -61,6 +61,10 @@ export class LoginPage {
 
       data=success.json();
       this.local.set('esRemitente', data.esRemitente);
+      if (data.esRemitente == false )
+      {
+        this.actualizarPosicion();
+      }
       this.events.publish('user:login');
     });
 
@@ -90,8 +94,8 @@ abrirPagina(){
 
 actualizarPosicion(){
  this.getTokenID();  
- var timer= setInterval(this.obtenerPosicion,5000);
- var timer2= setInterval(this.enviarPosicion,5000);
+ var timer= setInterval(this.obtenerPosicion.bind(this),5000);
+ var timer2= setInterval(this.enviarPosicion.bind(this),5000);
  //this.enviarPosicion();
 }
 
@@ -114,21 +118,25 @@ obtenerPosicion(){
     maximumAge        : 0, 
     timeout           : 50000
   };
-  var wpid = navigator.geolocation.getCurrentPosition(geo_success, geo_error, geo_options);
+  var wpid = navigator.geolocation.getCurrentPosition(geo_success.bind(this), geo_error, geo_options);
   console.log(this.latitude+' '+this.longitude);
 
 }
 
 
 enviarPosicion(){
+  //console.log('holaa');
+  //console.log(this.local.get('token')._result);
   if (typeof this.latitude != 'undefined' && typeof this.longitude != 'undefined')
   {
-    console.log(this.local);
+    //console.log('adios');
+    //console.log(this.local);
     var token=this.token;
     var id_usuario=this.id_usuario;
+    console.log(id_usuario);
     var headers= new Headers();
-    console.log('latitud: '+this.latitude);
-    datos="longitud_ciclista=4.7847038"+"&latitud_ciclista=37.8761787"+"&id_ciclista="+id_usuario;
+    //console.log('latitud: '+this.latitude);
+    datos="longitud_ciclista="+this.longitude+"&latitud_ciclista="+this.latitude+"&id_ciclista="+id_usuario;
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     headers.append('Authorization', 'Token e31e642fa2aa05743309a9a4deef815302c6c287');
     this.http.post('http://127.0.0.1:8000/usuarios/setPosicionCiclista/',datos,{

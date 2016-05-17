@@ -1,5 +1,6 @@
 import {Page, NavController, Storage, LocalStorage} from 'ionic/ionic';
 import {Http, Headers} from 'angular2/http';
+import {SendingDetailsPage} from '../sending-details/sending-details';
 /*
   Generated class for the SendingListRemitentePage page.
 
@@ -44,6 +45,14 @@ export class SendingListRemitentePage {
   }), error => {
   	console.log(error);
   }
+  }
+
+  verDetallesEnvio(envio){
+  	console.log(envio);
+  	this.nav.push(SendingDetailsPage,{
+  		envio:envio,
+  	});
+
   }
 
 
