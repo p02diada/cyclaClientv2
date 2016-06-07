@@ -1,6 +1,9 @@
 import {Page, NavController, Storage, LocalStorage} from 'ionic/ionic';
 import {Http, Headers} from 'angular2/http';
 import {SendingDetailsPage} from '../sending-details/sending-details';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/share';
 /*
   Generated class for the SendingListRemitentePage page.
 
@@ -48,12 +51,69 @@ export class SendingListRemitentePage {
   }
 
   verDetallesEnvio(envio){
-  	console.log(envio);
-  	this.nav.push(SendingDetailsPage,{
-  		envio:envio,
-  	});
-
+    this.envio=envio;
+    this.getAnuncio(envio.anuncio).subscribe(
+    (anuncio) => {
+      this.anuncio=anuncio;
+      });
+    this.getOferta(envio.oferta).subscribe(
+      (oferta)=>{
+        this.oferta=oferta;
+      });
+    var timer= setTimeout(this.enviarDatosADetalle.bind(this),200);
   }
+
+enviarDatosADetalle(){
+    this.nav.push(SendingDetailsPage,{
+      envio:this.envio,
+      anuncio:this.anuncio.anuncio,
+      oferta:this.oferta.oferta,
+    });
+
+}
+
+getAnuncio(id_anuncio){
+  if (this.anuncio){
+    return Observable.of(this.anuncio);
+  } else {
+  var token=this.local.get('token')._result; 
+  var headers= new Headers();
+  headers.append('Content-Type', 'application/x-www-form-urlencoded');
+  headers.append('Authorization', 'Token '+token);
+  datos="id_anuncio="+id_anuncio;
+  return this.http.post('http://127.0.0.1:8000/envios/getAnuncioPorId/',datos , {
+    headers: headers
+
+  })
+  .map(res => res.json())
+  .do(data => {
+    this.anuncio = data;
+  });
+    
+}
+}
+
+
+getOferta(id_oferta){
+  if (this.id_oferta){
+    return Observable.of(this.oferta);
+  } else {
+  var token=this.local.get('token')._result; 
+  var headers= new Headers();
+  headers.append('Content-Type', 'application/x-www-form-urlencoded');
+  headers.append('Authorization', 'Token '+token);
+  datos="id_oferta="+id_oferta;
+  return this.http.post('http://127.0.0.1:8000/envios/getOfertaPorId/',datos , {
+    headers: headers
+
+  })
+  .map(res => res.json())
+  .do(data => {
+    this.oferta = data;
+  });
+    
+}
+}
 
 
 }
