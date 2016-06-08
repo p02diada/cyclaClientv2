@@ -1,6 +1,7 @@
 import {Page, NavController, Storage, LocalStorage} from 'ionic/ionic';
 import {Http, Headers} from 'angular2/http';
 import {SendingDetailsPage} from '../sending-details/sending-details';
+import {Observable} from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/share';
@@ -59,6 +60,8 @@ export class SendingListRemitentePage {
     this.getOferta(envio.oferta).subscribe(
       (oferta)=>{
         this.oferta=oferta;
+        //this.obtenerPosicionCiclista();
+
       });
     var timer= setTimeout(this.enviarDatosADetalle.bind(this),200);
   }
@@ -113,6 +116,10 @@ getOferta(id_oferta){
   });
     
 }
+}
+
+obtenerPosicionCiclista(){
+
 }
 
 

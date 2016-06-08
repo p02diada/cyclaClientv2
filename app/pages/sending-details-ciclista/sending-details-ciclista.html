@@ -1,0 +1,52 @@
+<!--
+  Generated template for the SendingDetailsCiclistaPage page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-navbar *navbar secondary>
+  <button menuToggle>
+    <ion-icon name="menu"></ion-icon>
+  </button>
+  <ion-title>Detalles del Envío</ion-title>
+</ion-navbar>
+
+<ion-content padding class="sending-details-ciclista">
+
+<ion-list no-lines>
+
+<ion-item >
+  <div id="map1" >
+    
+  </div>
+</ion-item>
+
+
+ <div *ngIf="envio">
+
+ 	<div *ngIf="envio.estado == 'esperando'">
+		<ion-item  secondary>
+
+			<button full secondary (click)="cambiarEstadoEnvio('enviando')" [disabled]="statusBoton"> El paquete ha sido recogido</button>
+		</ion-item>
+	</div>
+
+</div>
+
+ <div *ngIf="envio">
+
+ 	<div *ngIf="envio.estado == 'enviando'">
+		<ion-item small secondary>
+
+			<button full secondary (click)="cambiarEstadoEnvio('entregado')" [disabled]="statusBoton"> El paquete ha sido entregado</button>
+		</ion-item>
+	</div>
+
+</div>
+
+
+
+</ion-list>
+
+  
+</ion-content>

@@ -7,6 +7,7 @@ import {ListDeliveriesPage} from './pages/list-deliveries/list-deliveries';
 import {NewBidPage} from './pages/new-bid/new-bid';
 import {ListOwnDeliveriesPage} from './pages/list-own-deliveries/list-own-deliveries';
 import {SendingListRemitentePage} from './pages/sending-list-remitente/sending-list-remitente';
+import {SendingDetailsCiclistaPage} from './pages/sending-details-ciclista/sending-details-ciclista';
 import {Http, Headers} from 'angular2/http';
 
 @App({
@@ -31,6 +32,7 @@ export class MyApp {
       //{title: 'Nueva oferta', component: NewBidPage, hide:false}
       {title: 'Mis Anuncios', component: ListOwnDeliveriesPage, hide:false}
       {title: 'Envíos', component: SendingListRemitentePage, hide:false}
+      {title: 'Envío actual', component: SendingDetailsCiclistaPage, hide:false}
     ];
 
     this.rootPage = LoginPage;
@@ -93,6 +95,7 @@ export class MyApp {
       
       this.findMenuItemByTitle('Públicar Envío').hide = false;
       this.findMenuItemByTitle('Lista de Anuncios').hide = true;
+      this.findMenuItemByTitle('Envío actual').hide = true;
 
     } else {
       

@@ -30,12 +30,9 @@ export class SendingDetailsPage {
 	}
 
 	cargarMapa(){
+
 		
 	anuncio=this.anuncio
-	//console.log(this.envio);
-	//console.log(this.anuncio);
-	//console.log(this.oferta);
-
 	setTimeout(function(){
 
 
@@ -49,6 +46,7 @@ export class SendingDetailsPage {
     //console.log(anuncio.latitudPuntoInicial);
     var latlngInicial = new google.maps.LatLng(anuncio.latitudPuntoInicial, anuncio.longitudPuntoInicial);
     var latlngFinal = new google.maps.LatLng(anuncio.latitudPuntoFinal, anuncio.longitudPuntoFinal);
+    //var latlngCiclista = new google.maps.LatLng(this.posicionCiclista.latitudCiclista, this.posicionCiclista.longitudCiclista);
     var markerInicial = new google.maps.Marker({
             map: map,
             label: 'A',
@@ -61,15 +59,41 @@ export class SendingDetailsPage {
             position: latlngFinal
     });
 
+ 
+
 }, 500, anuncio);
 
 	console.log(this.latitudCiclista);
-	this.hola=this.obtenerPosicionCiclista();
-	console.log(this.hola);
+	this.obtenerPosicionCiclista().subscribe(
+    (posicionCiclista)=>{
+      this.posicionCiclista=posicionCiclista;
+    });
+	this.timer=setInterval(this.dibujarPosicionCilista.bind(this), 5000);
 
 
 
 }
+
+  dibujarPosicionCilista(){
+    console.log(this.posicionCiclista);
+    var latlngCiclista = new google.maps.LatLng(this.posicionCiclista.latitudCiclista, this.posicionCiclista.longitudCiclista);
+    if (typeof this.markerFinal != 'undefined'){
+      var latlngCiclista = new google.maps.LatLng(this.posicionCiclista.latitudCiclista, this.posicionCiclista.longitudCiclista);
+      this.markerFinal.setPosition(latlngCiclista);
+
+
+    }else{
+
+
+      this.markerFinal = new google.maps.Marker({
+            map: map,
+            animation: google.maps.Animation.BOUNCE,
+            position: latlngCiclista
+            icon: "/img/bici_map.png"
+      });
+    }
+  }
+
 
 obtenerPosicionCiclista(){
 
@@ -80,17 +104,38 @@ obtenerPosicionCiclista(){
   headers.append('Content-Type', 'application/x-www-form-urlencoded');
   headers.append('Authorization', 'Token '+token);
   return this.http.post('http://127.0.0.1:8000/envios/getPosicionCiclistaPorId/',datos,{
-  	headers:headers
+    headers:headers
+  })
+  .map(res => res.json())
+  .do(data => {
+    //this.posicionCiclista = data;
+    console.log(data);
+  }); 
+  }
+
+onPageWillLeave(){
+  clearInterval(this.timer);
+}
+
+cambiarEstadoEnvio(estado){
+  
+  console.log(estado);  
+  this.botonstatus=true;
+  var token=this.local.get('token')._result;
+  var datos="id_envio="+this.envio.pk+"&estado="+estado;
+  var headers= new Headers();
+  headers.append('Content-Type', 'application/x-www-form-urlencoded');
+  headers.append('Authorization', 'Token '+token);
+  this.http.post('http://127.0.0.1:8000/envios/cambiarEstadoEnvio/',datos,{
+      headers:headers
   })
   .subscribe(success=>{
-  	console.log(success);
-  	this.latitudCiclista=success.json();
-  	console.log(this.latitudCiclista);
-  	return this.latitudCiclista;
+    console.log(success.json());
   }), error=>{
-  	console.log(error);
-  }		
-	}
+      console.log(error);
+  }
+}
+
 
 
 
