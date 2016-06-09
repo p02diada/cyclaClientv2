@@ -23,6 +23,10 @@ export class NewDeliveryPage {
     	descripcion: ['', Validators.compose([Validators.required])],
       direccionInicial: ['', Validators.compose([Validators.required])],
       direccionFinal: ['', Validators.compose([Validators.required])],
+      telefonoRemitente: ['', Validators.compose([Validators.required])],
+      telefonoReceptor: ['', Validators.compose([Validators.required])],
+      nombreRemitente: ['', Validators.compose([Validators.required])],
+      nombreReceptor: ['', Validators.compose([Validators.required])],
     })
     this.cargarMapa();
     this.local=new Storage(LocalStorage);
@@ -99,10 +103,8 @@ registro(){
 
 
       var longitudPuntoFinal=results[0].geometry.location.lng();
-      datos="remitente="+id_usuario+"&descripcion="+datos.descripcion+"&latitudPuntoInicial="+latitudPuntoInicial+"&longitudPuntoInicial="+longitudPuntoInicial+"&latitudPuntoFinal="+latitudPuntoFinal+"&longitudPuntoFinal="+longitudPuntoFinal;
-      //anuncio["longitudPuntoFinal"]=longitudPuntoFinal;
-        //console.log(results[0].geometry.location);
-        //console.log(results[0].geometry.location.lat());
+      datos="remitente="+id_usuario+"&descripcion="+datos.descripcion+'&telefonoRemitente='+datos.telefonoRemitente+'&telefonoReceptor='+datos.telefonoReceptor+'&nombreRemitente='+datos.nombreRemitente+'&nombreReceptor='+datos.nombreReceptor+'&direccionRemitente='+datos.direccionInicial+'&direccionReceptor='+datos.direccionFinal+"&latitudPuntoInicial="+latitudPuntoInicial+"&longitudPuntoInicial="+longitudPuntoInicial+"&latitudPuntoFinal="+latitudPuntoFinal+"&longitudPuntoFinal="+longitudPuntoFinal;
+
         
 
       } else {
