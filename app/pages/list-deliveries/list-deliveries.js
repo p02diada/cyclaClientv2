@@ -47,7 +47,7 @@ export class ListDeliveriesPage {
   var headers= new Headers();
   headers.append('Content-Type', 'application/x-www-form-urlencoded');
   headers.append('Authorization', 'Token '+token);
-  this.http.post('http://127.0.0.1:8000/envios/getAnuncios/',datos,{
+  this.http.post('http://localhost:8000/envios/getAnuncios/',datos,{
   	headers:headers
   })
   .subscribe(success =>{

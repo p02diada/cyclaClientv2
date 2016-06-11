@@ -12,8 +12,6 @@
 </ion-navbar>
 
 <ion-content padding class="sending-details">
-{{envio.pk}}
-{{anuncio.pk}}
 
 <ion-list no-lines>
 
@@ -28,7 +26,7 @@
  	<div *ngIf="envio.estado == 'entregado'">
 		<ion-item  secondary>
 
-			<button [disabled]="botonstatus" full secondary (click)="cambiarEstadoEnvio('esperando')" > Confirmar entrega de paquete</button>
+			<button [disabled]="botonstatus" full secondary (click)="cambiarEstadoEnvio('confirmado')" > Confirmar entrega de paquete</button>
 		</ion-item>
 	</div>
 

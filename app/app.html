@@ -7,10 +7,8 @@
   <ion-content>
     
     <ion-list no-lines>
-        <ion-list-header>
-          Menú principal
-        </ion-list-header>
       <button ion-item *ngFor="#p of pages" (click)="openPage(p)" [hidden]="p.hide">
+        <ion-icon item-left [name]="p.icon"></ion-icon>
         {{p.title}}
       </button>
     </ion-list>

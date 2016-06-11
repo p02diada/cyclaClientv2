@@ -1,5 +1,8 @@
 import {Page, Alert, NavController, NavParams,Storage, LocalStorage} from 'ionic/ionic';
 import {Http, Headers} from 'angular2/http';
+import {ListDeliveriesPage} from '../list-deliveries/list-deliveries';
+//import {Toast} from 'ionic-native';
+
 
 /*
   Generated class for the NewBidPage page.
@@ -22,6 +25,22 @@ export class NewBidPage {
   }
 
   cargarElMapa(){
+
+/*Toast.show("I'm a toast", 5000, "center").subscribe(
+  toast => {
+    console.log(toast);
+  }
+);*/
+
+    /*window.plugins.toast.showWithOptions(
+    {
+      message: "hey there",
+      duration: "short", // which is 2000 ms. "long" is 4000. Or specify the nr of ms yourself.
+      position: "bottom",
+      addPixelsY: -40  // added a negative value to move it up a bit (default 0)
+    }*/
+
+
 
     console.log(this.anuncio.latitudPuntoInicial);
     anuncio=this.anuncio
@@ -94,7 +113,8 @@ export class NewBidPage {
   		inputs: [
   		{
   			name: 'Precio',
-  			placeholder: '€'
+  			placeholder: '€',
+        type: 'number'
   		},
   		],
   		buttons: [
@@ -109,6 +129,7 @@ export class NewBidPage {
   			handler: data=>{
   				console.log(data);
   				this.guardarPrecio(data);
+          alert('Oferta creada correctamente')
   			}
 
   		}
@@ -116,6 +137,7 @@ export class NewBidPage {
 
   	});
   	this.nav.present(alert);
+
   }
 
   guardarPrecio(data){
@@ -128,7 +150,7 @@ export class NewBidPage {
 
     datos="anuncio="+this.anuncio.pk+"&ciclista="+id_usuario+"&precio="+data.Precio
 
-  this.http.post('http://127.0.0.1:8000/envios/crearOferta/',datos , {
+  this.http.post('http://localhost:8000/envios/crearOferta/',datos , {
       headers: headers
 
     })

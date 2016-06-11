@@ -8,6 +8,7 @@ import {NewBidPage} from './pages/new-bid/new-bid';
 import {ListOwnDeliveriesPage} from './pages/list-own-deliveries/list-own-deliveries';
 import {SendingListRemitentePage} from './pages/sending-list-remitente/sending-list-remitente';
 import {SendingDetailsCiclistaPage} from './pages/sending-details-ciclista/sending-details-ciclista';
+import {LogoutPage} from './pages/logout/logout';
 import {Http, Headers} from 'angular2/http';
 
 @App({
@@ -27,12 +28,13 @@ export class MyApp {
     this.pages=[
       {title: 'Login', component: LoginPage, hide: true },
       {title: 'Select User', component: SelectUserPage, hide: true},
-      {title: 'Públicar Envío', component: NewDeliveryPage, hide:false},
-      {title: 'Lista de Anuncios', component: ListDeliveriesPage, hide:false},
+      {title: 'Públicar Envío', component: NewDeliveryPage, icon:'add', hide:false},
+      {title: 'Lista de Anuncios', component: ListDeliveriesPage, icon:'list', hide:false},
       //{title: 'Nueva oferta', component: NewBidPage, hide:false}
-      {title: 'Mis Anuncios', component: ListOwnDeliveriesPage, hide:false}
-      {title: 'Envíos', component: SendingListRemitentePage, hide:false}
-      {title: 'Envío actual', component: SendingDetailsCiclistaPage, hide:false}
+      {title: 'Mis Anuncios', component: ListOwnDeliveriesPage, icon:'list', hide:false}
+      {title: 'Envíos', component: SendingListRemitentePage, icon:'bicycle', hide:false}
+      {title: 'Envío actual', component: SendingDetailsCiclistaPage, icon:'bicycle', hide:false}
+      {title: 'Cerrar sesion', component: LogoutPage, icon:'log-out', hide:false}
     ];
 
     this.rootPage = LoginPage;
@@ -47,25 +49,9 @@ export class MyApp {
       if (window.StatusBar) {
         window.StatusBar.styleDefault();
       }
-/*
-      var timer= setInterval(function(){
-        function geo_success(position) {
-          console.log(position.coords.latitude, position.coords.longitude);
-        }
 
-        function geo_error() {
-          alert("Sorry, no position available.");
-        }
 
-        var geo_options = {
-          enableHighAccuracy: true, 
-          maximumAge        : 0, 
-          timeout           : 50000
-        };
 
-        var wpid = navigator.geolocation.getCurrentPosition(geo_success, geo_error, geo_options);
-
-      },5000);*/
     });
   }
 

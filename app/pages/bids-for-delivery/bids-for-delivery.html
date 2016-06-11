@@ -16,13 +16,16 @@
 	<ion-item *ngFor="#oferta of ofertas">
 
   			<h2>{{oferta.precio}} Euros</h2>
-			<p>{{oferta.username}}</p>
+
+			<p>Usuario: {{oferta.username}}</p>
 			<p>
-			{{oferta.valoracionMedia}}
+			Valoracion: {{oferta.valoracionMedia}}
 			</p>
 			
-			<button item-right (click)="aceptarOferta(oferta)">
+			<button item-right secondary (click)="aceptarOferta(oferta)">
+			
 			Aceptar
+			<ion-icon name="checkmark-circle-outline"></ion-icon>
 			</button>
 		
 	</ion-item>

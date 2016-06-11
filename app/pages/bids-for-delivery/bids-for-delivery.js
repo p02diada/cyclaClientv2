@@ -1,5 +1,6 @@
 import {Page, NavController, NavParams, Storage, LocalStorage} from 'ionic/ionic';
 import {Http, Headers} from 'angular2/http';
+import {ListOwnDeliveriesPage} from '../list-own-deliveries/list-own-deliveries';
 
 /*
   Generated class for the BidsForDeliveryPage page.
@@ -28,7 +29,7 @@ export class BidsForDeliveryPage {
   var headers= new Headers();
   headers.append('Content-Type', 'application/x-www-form-urlencoded');
   headers.append('Authorization', 'Token '+token);
-  this.http.post('http://127.0.0.1:8000/envios/getOfertasParaAnuncio/',datos,{
+  this.http.post('http://localhost:8000/envios/getOfertasParaAnuncio/',datos,{
   	headers:headers
   })
   .subscribe(success =>{
@@ -57,11 +58,12 @@ export class BidsForDeliveryPage {
     var headers= new Headers();
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     headers.append('Authorization', 'Token '+token); 
-    this.http.post('http://127.0.0.1:8000/envios/aceptarOferta/',datos,{
+    this.http.post('http://localhost:8000/envios/aceptarOferta/',datos,{
       headers:headers
     })
   .subscribe(success =>{
     console.log("bien");
+    this.nav.setRoot(ListOwnDeliveriesPage);
 
 
   }), error => {

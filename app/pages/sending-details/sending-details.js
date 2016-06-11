@@ -1,4 +1,4 @@
-import {Page, NavController, NavParams, Storage, LocalStorage} from 'ionic/ionic';
+import {Page, NavController, NavParams, Storage, LocalStorage, Alert} from 'ionic/ionic';
 import {Http, Headers} from 'angular2/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
@@ -68,7 +68,8 @@ export class SendingDetailsPage {
     (posicionCiclista)=>{
       this.posicionCiclista=posicionCiclista;
     });
-	this.timer=setInterval(this.dibujarPosicionCilista.bind(this), 5000);
+  this.timer=setTimeout(this.dibujarPosicionCilista.bind(this),500);
+	this.timer=setInterval(this.dibujarPosicionCilista.bind(this), 60000);
 
 
 
@@ -103,7 +104,7 @@ obtenerPosicionCiclista(){
   var headers= new Headers();
   headers.append('Content-Type', 'application/x-www-form-urlencoded');
   headers.append('Authorization', 'Token '+token);
-  return this.http.post('http://127.0.0.1:8000/envios/getPosicionCiclistaPorId/',datos,{
+  return this.http.post('http://localhost:8000/envios/getPosicionCiclistaPorId/',datos,{
     headers:headers
   })
   .map(res => res.json())
@@ -126,7 +127,7 @@ cambiarEstadoEnvio(estado){
   var headers= new Headers();
   headers.append('Content-Type', 'application/x-www-form-urlencoded');
   headers.append('Authorization', 'Token '+token);
-  this.http.post('http://127.0.0.1:8000/envios/cambiarEstadoEnvio/',datos,{
+  this.http.post('http://localhost:8000/envios/cambiarEstadoEnvio/',datos,{
       headers:headers
   })
   .subscribe(success=>{
@@ -134,7 +135,101 @@ cambiarEstadoEnvio(estado){
   }), error=>{
       console.log(error);
   }
+
+  if(estado="confirmado"){
+      let alert = Alert.create({
+      title: 'Valoracion',
+      message: 'Inserte una valoracion del 1 al 5 para el ciclista que ha realizado su envio ',
+      inputs: [
+      {
+        name: 'Valoracion',
+        placeholder: 'Del 1 al 5',
+        type: 'number',
+      },
+      ],
+      buttons: [
+      {
+        text: 'Aceptar',
+        handler: data=>{
+          console.log(data);
+          if(data.Valoracion>5 || data.Valoracion<1){
+            this.cambiarEstadoEnvio('confirmado');
+          }else{
+            this.enviarValoracion(data);
+            this.borrarAnuncio();
+          }
+          
+        }
+
+      },
+      ]
+
+    });
+    this.nav.present(alert);
+
+  }
+
+
 }
+borrarAnuncio(){
+
+    var token=this.local.get('token')._result;
+    var id_usuario=this.local.get('id_usuario')._result; 
+    var headers= new Headers();
+    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+    headers.append('Authorization', 'Token '+token);
+
+    datos="id_anuncio="+this.anuncio.pk;
+
+  this.http.post('http://localhost:8000/envios/borrarAnuncio/',datos , {
+      headers: headers
+
+    })
+    .subscribe(success => {
+      //console.log(anuncio);
+      console.log("BIENNN");
+      console.log(success);
+      
+    }, error => {
+      //console.log(anuncio);
+      console.log("MALLLLL");
+      console.log(error);
+
+
+  }
+
+}
+
+enviarValoracion(data){
+
+    var token=this.local.get('token')._result;
+    var id_usuario=this.local.get('id_usuario')._result; 
+    var headers= new Headers();
+    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+    headers.append('Authorization', 'Token '+token);
+
+    datos="id_ciclista="+this.oferta.ciclista+"&valoracion="+data.Valoracion;
+
+  this.http.post('http://localhost:8000/envios/cambiarValoracionCiclista/',datos , {
+      headers: headers
+
+    })
+    .subscribe(success => {
+      //console.log(anuncio);
+      console.log("BIENNN");
+      console.log(success);
+      
+    }, error => {
+      //console.log(anuncio);
+      console.log("MALLLLL");
+      console.log(error);
+
+
+  }
+
+}
+
+
 
 
 
