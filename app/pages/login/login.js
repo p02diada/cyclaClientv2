@@ -35,7 +35,7 @@ export class LoginPage {
 
   	user=this.loginForm.value;
 
-   this.http.post('http://localhost:8000/api-token-auth/', 'username=' + user.usuario + '&password=' + user.contraseña, {
+   this.http.post('http://p02diada.pythonanywhere.com/api-token-auth/', 'username=' + user.usuario + '&password=' + user.contraseña, {
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
     }
@@ -48,7 +48,7 @@ export class LoginPage {
      this.local.set('username', user.usuario);
      this.local.set('token', data.token);
 
-     this.http.get("http://localhost:8000/usuarios/getIdUsuario/"+user.usuario+"/")
+     this.http.get("http://p02diada.pythonanywhere.com/usuarios/getIdUsuario/"+user.usuario+"/")
      .subscribe(success=>{
 
       data=success.json();
@@ -56,7 +56,7 @@ export class LoginPage {
       
     });
 
-     this.http.get("http://localhost:8000/usuarios/getTipoUsuario/"+user.usuario+"/")
+     this.http.get("http://p02diada.pythonanywhere.com/usuarios/getTipoUsuario/"+user.usuario+"/")
      .subscribe(success=>{
 
       data=success.json();
@@ -142,7 +142,7 @@ enviarPosicion(){
     datos="longitud_ciclista="+this.longitude+"&latitud_ciclista="+this.latitude+"&id_ciclista="+id_usuario;
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     headers.append('Authorization', 'Token e31e642fa2aa05743309a9a4deef815302c6c287');
-    this.http.post('http://localhost:8000/usuarios/setPosicionCiclista/',datos,{
+    this.http.post('http://p02diada.pythonanywhere.com/usuarios/setPosicionCiclista/',datos,{
       headers:headers
     }).subscribe(success =>{
       console.log(success);

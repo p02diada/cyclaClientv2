@@ -29,7 +29,7 @@ export class SendingListRemitentePage {
   var headers= new Headers();
   headers.append('Content-Type', 'application/x-www-form-urlencoded');
   headers.append('Authorization', 'Token '+token);
-  this.http.post('http://localhost:8000/envios/getEnviosRemitente/',datos,{
+  this.http.post('http://p02diada.pythonanywhere.com/envios/getEnviosRemitente/',datos,{
   	headers:headers
   })
   .subscribe(success =>{
@@ -84,7 +84,7 @@ getAnuncio(id_anuncio){
   headers.append('Content-Type', 'application/x-www-form-urlencoded');
   headers.append('Authorization', 'Token '+token);
   datos="id_anuncio="+id_anuncio;
-  return this.http.post('http://localhost:8000/envios/getAnuncioPorId/',datos , {
+  return this.http.post('http://p02diada.pythonanywhere.com/envios/getAnuncioPorId/',datos , {
     headers: headers
 
   })
@@ -106,7 +106,7 @@ getOferta(id_oferta){
   headers.append('Content-Type', 'application/x-www-form-urlencoded');
   headers.append('Authorization', 'Token '+token);
   datos="id_oferta="+id_oferta;
-  return this.http.post('http://localhost:8000/envios/getOfertaPorId/',datos , {
+  return this.http.post('http://p02diada.pythonanywhere.com/envios/getOfertaPorId/',datos , {
     headers: headers
 
   })

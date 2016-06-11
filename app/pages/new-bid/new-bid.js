@@ -150,7 +150,7 @@ export class NewBidPage {
 
     datos="anuncio="+this.anuncio.pk+"&ciclista="+id_usuario+"&precio="+data.Precio
 
-  this.http.post('http://localhost:8000/envios/crearOferta/',datos , {
+  this.http.post('http://p02diada.pythonanywhere.com/envios/crearOferta/',datos , {
       headers: headers
 
     })
