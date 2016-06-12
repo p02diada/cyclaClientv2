@@ -1,8 +1,8 @@
-import {Page, NavController, Storage, LocalStorage} from 'ionic/ionic';
+import {Page, NavController, Storage,Alert, LocalStorage} from 'ionic/ionic';
 import { FORM_DIRECTIVES, FormBuilder,  ControlGroup, Validators, AbstractControl} from 'angular2/common';
 import {Http, Headers} from 'angular2/http';
 import {ListOwnDeliveriesPage} from '../list-own-deliveries/list-own-deliveries';
-
+import {Toast} from 'ionic-native';
 /*
   Generated class for the NewDeliveryPage page.
 
@@ -32,6 +32,7 @@ export class NewDeliveryPage {
       nombreReceptor: ['', Validators.compose([Validators.required])],
     })
     //this.cargarMapa();
+    //this.presentAlert();
     this.local=new Storage(LocalStorage);
     //console.log(this.local.get('username'));
 
@@ -62,6 +63,15 @@ export class NewDeliveryPage {
 
 }*/
 
+presentAlert() {
+  let alert = Alert.create({
+    title: 'Error',
+    subTitle: 'las direcciones deben tener la forma: Calle, número, localidad',
+    buttons: ['Aceptar']
+  });
+  this.nav.present(alert);
+}
+
 
 
 
@@ -88,11 +98,11 @@ registro(){
         });*/
 
 
-      var latitudPuntoInicial=results[0].geometry.location.lat();
+      latitudPuntoInicial=results[0].geometry.location.lat();
       //anuncio["latitudPuntoInicial"]=latitudPuntoInicial;
 
 
-      var longitudPuntoInicial=results[0].geometry.location.lng();
+      longitudPuntoInicial=results[0].geometry.location.lng();
      // anuncio["longitudPuntoInicial"]=longitudPuntoInicial;
 
     geocoder.geocode( { 'address': addressFinal}, function(results, status) {
@@ -102,31 +112,43 @@ registro(){
             map: map,
             position: results[0].geometry.location
         });*/
-      var latitudPuntoFinal=results[0].geometry.location.lat();
+      latitudPuntoFinal=results[0].geometry.location.lat();
       //anuncio["latitudPuntoFinal"]=latitudPuntoFinal;
 
 
-      var longitudPuntoFinal=results[0].geometry.location.lng();
+      longitudPuntoFinal=results[0].geometry.location.lng();
       datos="remitente="+id_usuario+"&descripcion="+datos.descripcion+'&telefonoRemitente='+datos.telefonoRemitente+'&telefonoReceptor='+datos.telefonoReceptor+'&nombreRemitente='+datos.nombreRemitente+'&nombreReceptor='+datos.nombreReceptor+'&direccionRemitente='+datos.direccionInicial+'&datosAdicionalesDireccionReceptor='+datos.datosAdicionalesDireccionReceptor+'&datosAdicionalesDireccionRemitente='+datos.datosAdicionalesDireccionRemitente+'&direccionReceptor='+datos.direccionFinal+"&latitudPuntoInicial="+latitudPuntoInicial+"&longitudPuntoInicial="+longitudPuntoInicial+"&latitudPuntoFinal="+latitudPuntoFinal+"&longitudPuntoFinal="+longitudPuntoFinal;
 
         
 
       } else {
-        alert('Error, las direcciones deben tener la forma: Calle, número, localidad');
+        console.log('Error, las direcciones deben tener la forma: Calle, número, localidad');
+        //alert('Error, las direcciones deben tener la forma: Calle, número, localidad');
       }
     });
 
 
 
       } else {
-        alert('Error, las direcciones deben tener la forma: Calle, número, localidad');
+        console.log('Error, las direcciones deben tener la forma: Calle, número, localidad');
       }
     });
 
 
 
   setTimeout(()=>{
-    this.enviarDatosAnuncio(datos);
+    if(typeof latitudPuntoFinal != 'undefined' && typeof latitudPuntoInicial != 'undefined' &&  typeof longitudPuntoInicial != 'undefined' &&  typeof longitudPuntoFinal != 'undefined'){
+      console.log(latitudPuntoFinal);
+      console.log(latitudPuntoInicial);
+      console.log(longitudPuntoFinal);
+      console.log(longitudPuntoInicial);
+
+      this.enviarDatosAnuncio(datos);
+
+    }else{
+      this.presentAlert();
+    }
+    
 
   }, 500);
 
@@ -146,7 +168,7 @@ enviarDatosAnuncio(datos){
 
 
 
-  this.http.post('http://p02diada.pythonanywhere.com/envios/crearAnuncio/',datos , {
+  this.http.post('http://localhost:8000/envios/crearAnuncio/',datos , {
       headers: headers
 
     })
@@ -154,6 +176,10 @@ enviarDatosAnuncio(datos){
       //console.log(anuncio);
       console.log("BIENNN");
       console.log(success);
+      Toast.show("Anuncio creado correctamente", 5000, "top").subscribe(
+        toast => {
+        console.log(toast);
+      });
       this.nav.setRoot(ListOwnDeliveriesPage);
       
     }, error => {

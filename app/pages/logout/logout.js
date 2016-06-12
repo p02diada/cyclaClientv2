@@ -11,18 +11,21 @@ import {LoginPage} from '../login/login';
   templateUrl: 'build/pages/logout/logout.html',
 })
 export class LogoutPage {
-  constructor(nav: NavController) {
+  constructor(nav: NavController, events:Events) {
     this.nav = nav;
     this.local=new Storage(LocalStorage);
+    this.events=events;
     this.cerrarSesion();
   }
 
-  cerrarSesion(){
+  cerrarSesion(event){
   	
   	this.local.remove('username');
   	this.local.remove('token');
   	this.local.remove('id_usuario');
   	this.local.remove('esRemitente');
+
+    this.events.publish('user:logout');
 
   	this.nav.push(LoginPage);
 

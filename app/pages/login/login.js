@@ -3,6 +3,8 @@ import { FORM_DIRECTIVES, FormBuilder,  ControlGroup, Validators, AbstractContro
 import {Http, Headers} from 'angular2/http';
 import {SelectUserPage} from '../select-user/select-user';
 import {FirstPage} from '../first-page/first-page';
+import {ListDeliveriesPage} from '../list-deliveries/list-deliveries';
+import {SendingListRemitentePage} from '../sending-list-remitente/sending-list-remitente';
 
 
 
@@ -23,6 +25,7 @@ export class LoginPage {
   	this.http=http;
     this.local=new Storage(LocalStorage);
     this.events=events;
+    this.listenToLogout();
     this.loginForm = form.group({
       usuario: ['', Validators.compose([Validators.required])],
       contraseña: ["", Validators.required]
@@ -35,7 +38,7 @@ export class LoginPage {
 
   	user=this.loginForm.value;
 
-   this.http.post('http://p02diada.pythonanywhere.com/api-token-auth/', 'username=' + user.usuario + '&password=' + user.contraseña, {
+   this.http.post('http://localhost:8000/api-token-auth/', 'username=' + user.usuario + '&password=' + user.contraseña, {
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
     }
@@ -48,7 +51,7 @@ export class LoginPage {
      this.local.set('username', user.usuario);
      this.local.set('token', data.token);
 
-     this.http.get("http://p02diada.pythonanywhere.com/usuarios/getIdUsuario/"+user.usuario+"/")
+     this.http.get("http://localhost:8000/usuarios/getIdUsuario/"+user.usuario+"/")
      .subscribe(success=>{
 
       data=success.json();
@@ -56,7 +59,7 @@ export class LoginPage {
       
     });
 
-     this.http.get("http://p02diada.pythonanywhere.com/usuarios/getTipoUsuario/"+user.usuario+"/")
+     this.http.get("http://localhost:8000/usuarios/getTipoUsuario/"+user.usuario+"/")
      .subscribe(success=>{
 
       data=success.json();
@@ -64,6 +67,9 @@ export class LoginPage {
       if (data.esRemitente == false )
       {
         this.actualizarPosicion();
+        this.nav.setRoot(ListDeliveriesPage);
+      }else{
+        this.nav.setRoot(SendingListRemitentePage);
       }
       this.events.publish('user:login');
     });
@@ -71,7 +77,7 @@ export class LoginPage {
 
       //console.log(request.user);
       //console.log(request.auth);
-      this.nav.setRoot(FirstPage);
+      //this.nav.setRoot(FirstPage);
     }, error => {
     	console.log("MALLLLL");
       console.log(error);
@@ -95,10 +101,10 @@ abrirPagina(){
 actualizarPosicion(){
  this.getTokenID();
 
- var timer1=setTimeout(this.obtenerPosicion.bind(this),500);
- var timer2=setTimeout(this.enviarPosicion.bind(this),600);  
- var timer3= setInterval(this.obtenerPosicion.bind(this),60000);
- var timer4= setInterval(this.enviarPosicion.bind(this),60000);
+ this.timer1=setTimeout(this.obtenerPosicion.bind(this),500);
+ this.timer2=setTimeout(this.enviarPosicion.bind(this),600);  
+ this.timer3= setInterval(this.obtenerPosicion.bind(this),60000);
+ this.timer4= setInterval(this.enviarPosicion.bind(this),60000);
  //this.enviarPosicion();
 }
 
@@ -113,7 +119,7 @@ obtenerPosicion(){
   }
 
   function geo_error() {
-    alert("Sorry, no position available.");
+    alert("Esta es la puta alerta.");
   }
 
   var geo_options = {
@@ -137,12 +143,13 @@ enviarPosicion(){
     var token=this.token;
     var id_usuario=this.id_usuario;
     console.log(id_usuario);
+    console.log(token);
     var headers= new Headers();
     //console.log('latitud: '+this.latitude);
     datos="longitud_ciclista="+this.longitude+"&latitud_ciclista="+this.latitude+"&id_ciclista="+id_usuario;
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
-    headers.append('Authorization', 'Token e31e642fa2aa05743309a9a4deef815302c6c287');
-    this.http.post('http://p02diada.pythonanywhere.com/usuarios/setPosicionCiclista/',datos,{
+    headers.append('Authorization', 'Token '+token);
+    this.http.post('http://localhost:8000/usuarios/setPosicionCiclista/',datos,{
       headers:headers
     }).subscribe(success =>{
       console.log(success);
@@ -154,6 +161,16 @@ enviarPosicion(){
 getTokenID(){
     this.token=this.local.get('token')._result;
     this.id_usuario=this.local.get('id_usuario')._result;
+
+}
+
+listenToLogout(){
+    this.events.subscribe('user:logout', () => {
+      console.log('usuario fueraaaaaaaaa');
+      clearInterval(this.timer3);
+      clearInterval(this.timer4);
+          
+    });
 
 }
 

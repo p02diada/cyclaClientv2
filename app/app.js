@@ -28,12 +28,12 @@ export class MyApp {
     this.pages=[
       {title: 'Login', component: LoginPage, hide: true },
       {title: 'Select User', component: SelectUserPage, hide: true},
-      {title: 'Públicar Envío', component: NewDeliveryPage, icon:'add', hide:false},
-      {title: 'Lista de Anuncios', component: ListDeliveriesPage, icon:'list', hide:false},
+      {title: 'Públicar Envío', component: NewDeliveryPage, icon:'add', hide:true},
+      {title: 'Lista de Anuncios', component: ListDeliveriesPage, icon:'list', hide:true},
       //{title: 'Nueva oferta', component: NewBidPage, hide:false}
-      {title: 'Mis Anuncios', component: ListOwnDeliveriesPage, icon:'list', hide:false}
-      {title: 'Envíos', component: SendingListRemitentePage, icon:'bicycle', hide:false}
-      {title: 'Envío actual', component: SendingDetailsCiclistaPage, icon:'bicycle', hide:false}
+      {title: 'Mis Anuncios', component: ListOwnDeliveriesPage, icon:'list', hide:true}
+      {title: 'Envíos', component: SendingListRemitentePage, icon:'bicycle', hide:true}
+      {title: 'Envío actual', component: SendingDetailsCiclistaPage, icon:'bicycle', hide:true}
       {title: 'Cerrar sesion', component: LogoutPage, icon:'log-out', hide:false}
     ];
 
@@ -81,14 +81,17 @@ export class MyApp {
       
       this.findMenuItemByTitle('Públicar Envío').hide = false;
       this.findMenuItemByTitle('Lista de Anuncios').hide = true;
+      this.findMenuItemByTitle('Mis Anuncios').hide = false;
+      this.findMenuItemByTitle('Envíos').hide = false;
       this.findMenuItemByTitle('Envío actual').hide = true;
 
     } else {
       
-      this.findMenuItemByTitle('Login').hide = true;
       this.findMenuItemByTitle('Públicar Envío').hide = true;
+      this.findMenuItemByTitle('Lista de Anuncios').hide = false;
       this.findMenuItemByTitle('Mis Anuncios').hide = true;
       this.findMenuItemByTitle('Envíos').hide = true;
+      this.findMenuItemByTitle('Envío actual').hide = false;
 
 
     }

@@ -1,10 +1,5 @@
-1. alert en el geocode de nuevo anuncio
-6. En los envios la primera vez que se pulsa hay un error de undefined y no siempre se dibuja el ciclista
 8. manejar el error cuando no se puede enviar la posicion del ciclista
-10.redireccion al crear una oferta
-13. error al localizar un envío
-14. error cuando no hay envios del ciclista list index out of range
-15. mirar si sigue intentando mandar la posicion al cerrar sesion e iniciar con otro
-16. mostrar datos del envio en el ciclista
-17. cambiar la pagina a la que se redirige al haer login
+15. mostrar numero de valoraciones en las ofertas
+17. que el ciclista solo pueda tener un envio
+
 

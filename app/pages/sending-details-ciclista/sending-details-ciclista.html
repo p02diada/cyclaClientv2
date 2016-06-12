@@ -15,8 +15,9 @@
 
 <ion-list no-lines>
 
+
 <ion-item >
-  <div id="map1" >
+  <div *ngIf="anuncio" id="map1" >
     
   </div>
 </ion-item>
@@ -47,6 +48,38 @@
 
 
 </ion-list>
+
+<div *ngIf="anuncio">
+  <ion-list no-lines>
+      <ion-list-header>
+      Datos de recogida
+      </ion-list-header>
+      <ion-item>
+      <ion-icon item-left name="locate"></ion-icon>{{anuncio.direccionRemitente}}</ion-item>
+      <ion-item>
+      <ion-icon item-left name="navigate"></ion-icon>{{anuncio.datosAdicionalesDireccionRemitente}}</ion-item>
+      <ion-item>
+      <ion-icon item-left name="person"></ion-icon>{{anuncio.nombreRemitente}}</ion-item>
+      <ion-item>
+      <ion-icon item-left name="call"></ion-icon>{{anuncio.telefonoRemitente}}</ion-item>
+
+  </ion-list>
+
+  <ion-list no-lines>
+      <ion-list-header>
+      Datos de entrega
+      </ion-list-header>
+      <ion-item>
+      <ion-icon item-left name="locate"></ion-icon>{{anuncio.direccionReceptor}}</ion-item>
+      <ion-item>
+      <ion-icon item-left name="navigate"></ion-icon>{{anuncio.datosAdicionalesDireccionReceptor}}</ion-item>
+      <ion-item>
+      <ion-icon item-left name="person"></ion-icon>{{anuncio.nombreReceptor}}</ion-item>
+      <ion-item>
+      <ion-icon item-left name="call"></ion-icon>{{anuncio.telefonoReceptor}}</ion-item>
+
+  </ion-list>
+</div>
 
   
 </ion-content>

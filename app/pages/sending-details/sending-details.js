@@ -68,7 +68,7 @@ export class SendingDetailsPage {
     (posicionCiclista)=>{
       this.posicionCiclista=posicionCiclista;
     });
-  this.timer=setTimeout(this.dibujarPosicionCilista.bind(this),500);
+  this.timer=setTimeout(this.dibujarPosicionCilista.bind(this),700);
 	this.timer=setInterval(this.dibujarPosicionCilista.bind(this), 60000);
 
 
@@ -90,7 +90,7 @@ export class SendingDetailsPage {
             map: map,
             animation: google.maps.Animation.BOUNCE,
             position: latlngCiclista
-            icon: "/img/bici_map.png"
+            icon: "./img/bici_map.png"
       });
     }
   }
@@ -104,7 +104,7 @@ obtenerPosicionCiclista(){
   var headers= new Headers();
   headers.append('Content-Type', 'application/x-www-form-urlencoded');
   headers.append('Authorization', 'Token '+token);
-  return this.http.post('http://p02diada.pythonanywhere.com/envios/getPosicionCiclistaPorId/',datos,{
+  return this.http.post('http://localhost:8000/envios/getPosicionCiclistaPorId/',datos,{
     headers:headers
   })
   .map(res => res.json())
@@ -127,7 +127,7 @@ cambiarEstadoEnvio(estado){
   var headers= new Headers();
   headers.append('Content-Type', 'application/x-www-form-urlencoded');
   headers.append('Authorization', 'Token '+token);
-  this.http.post('http://p02diada.pythonanywhere.com/envios/cambiarEstadoEnvio/',datos,{
+  this.http.post('http://localhost:8000/envios/cambiarEstadoEnvio/',datos,{
       headers:headers
   })
   .subscribe(success=>{
@@ -181,7 +181,7 @@ borrarAnuncio(){
 
     datos="id_anuncio="+this.anuncio.pk;
 
-  this.http.post('http://p02diada.pythonanywhere.com/envios/borrarAnuncio/',datos , {
+  this.http.post('http://localhost:8000/envios/borrarAnuncio/',datos , {
       headers: headers
 
     })
@@ -210,7 +210,7 @@ enviarValoracion(data){
 
     datos="id_ciclista="+this.oferta.ciclista+"&valoracion="+data.Valoracion;
 
-  this.http.post('http://p02diada.pythonanywhere.com/envios/cambiarValoracionCiclista/',datos , {
+  this.http.post('http://localhost:8000/envios/cambiarValoracionCiclista/',datos , {
       headers: headers
 
     })

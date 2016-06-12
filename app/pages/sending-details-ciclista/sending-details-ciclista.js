@@ -1,5 +1,6 @@
-import {Page, NavController, NavParams, Storage, LocalStorage} from 'ionic/ionic';
+import {Page, NavController, NavParams, Storage, LocalStorage, Alert} from 'ionic/ionic';
 import {Http, Headers} from 'angular2/http';
+import {ListDeliveriesPage} from '../list-deliveries/list-deliveries';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
 
@@ -22,12 +23,13 @@ export class SendingDetailsCiclistaPage {
 
   cargarDatos(){
 
-  	var timer = setTimeout(this.cargarMapa.bind(this),500);
+  	var timer = setTimeout(this.cargarMapa.bind(this),1000);
 
 
   	this.obtenerDatos().subscribe(
   		(datos)=>{
   			console.log(datos);
+        this.datos=datos;
   			this.anuncio=datos.anuncio;
   			this.envio=datos.envio;
   			this.oferta=datos.oferta;
@@ -45,16 +47,31 @@ export class SendingDetailsCiclistaPage {
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     headers.append('Authorization', 'Token '+token);
 
-   	return this.http.post('http://p02diada.pythonanywhere.com/envios/getEnviosCiclista/',datos,{
+   	return this.http.post('http://localhost:8000/envios/getEnviosCiclista/',datos,{
     	headers:headers
   	})
   	.map(res=>res.json())
   	.do(data=>{
   		console.log(data);
+      if(data.respuesta){
+        console.log('No ha envios');
+      }
   	});
   }
 
   cargarMapa(){
+
+    if(this.datos.respuesta){
+
+      let alert = Alert.create({
+             title: 'Error',
+             subTitle: 'Usted no tiene ningún envío asignado, realice alguna oferta.',
+             buttons: ['Ok']
+           });
+          this.nav.present(alert);
+          //this.nav.setRoot(ListDeliveriesPage);
+
+    }else{
 
     var latlng = new google.maps.LatLng(37.8881751, -4.7793835);
     var mapOptions = {
@@ -78,6 +95,7 @@ export class SendingDetailsCiclistaPage {
             label: 'B',
             position: latlngFinal
     });
+   }
 	
   }
 
@@ -89,7 +107,7 @@ export class SendingDetailsCiclistaPage {
   	var headers= new Headers();
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     headers.append('Authorization', 'Token '+token);
-   	this.http.post('http://p02diada.pythonanywhere.com/envios/cambiarEstadoEnvio/',datos,{
+   	this.http.post('http://localhost:8000/envios/cambiarEstadoEnvio/',datos,{
     	headers:headers
   	})
    	.subscribe(success=>{

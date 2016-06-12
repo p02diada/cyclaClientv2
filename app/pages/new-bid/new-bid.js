@@ -1,7 +1,7 @@
 import {Page, Alert, NavController, NavParams,Storage, LocalStorage} from 'ionic/ionic';
 import {Http, Headers} from 'angular2/http';
 import {ListDeliveriesPage} from '../list-deliveries/list-deliveries';
-//import {Toast} from 'ionic-native';
+import {Toast} from 'ionic-native';
 
 
 /*
@@ -25,21 +25,6 @@ export class NewBidPage {
   }
 
   cargarElMapa(){
-
-/*Toast.show("I'm a toast", 5000, "center").subscribe(
-  toast => {
-    console.log(toast);
-  }
-);*/
-
-    /*window.plugins.toast.showWithOptions(
-    {
-      message: "hey there",
-      duration: "short", // which is 2000 ms. "long" is 4000. Or specify the nr of ms yourself.
-      position: "bottom",
-      addPixelsY: -40  // added a negative value to move it up a bit (default 0)
-    }*/
-
 
 
     console.log(this.anuncio.latitudPuntoInicial);
@@ -83,7 +68,7 @@ export class NewBidPage {
             map: map,
          	animation: google.maps.Animation.BOUNCE,
             position: latlngActual
-            icon: "/img/bici_map.png"
+            icon: "./img/bici_map.png"
     });
 
 
@@ -129,7 +114,6 @@ export class NewBidPage {
   			handler: data=>{
   				console.log(data);
   				this.guardarPrecio(data);
-          alert('Oferta creada correctamente')
   			}
 
   		}
@@ -150,7 +134,7 @@ export class NewBidPage {
 
     datos="anuncio="+this.anuncio.pk+"&ciclista="+id_usuario+"&precio="+data.Precio
 
-  this.http.post('http://p02diada.pythonanywhere.com/envios/crearOferta/',datos , {
+  this.http.post('http://localhost:8000/envios/crearOferta/',datos , {
       headers: headers
 
     })
@@ -158,6 +142,11 @@ export class NewBidPage {
       //console.log(anuncio);
       console.log("BIENNN");
       console.log(success);
+
+      Toast.show("Oferta creada correctamente", 5000, "top").subscribe(
+        toast => {
+        console.log(toast);
+      });
       
     }, error => {
       //console.log(anuncio);

@@ -29,7 +29,7 @@ export class SendingListRemitentePage {
   var headers= new Headers();
   headers.append('Content-Type', 'application/x-www-form-urlencoded');
   headers.append('Authorization', 'Token '+token);
-  this.http.post('http://p02diada.pythonanywhere.com/envios/getEnviosRemitente/',datos,{
+  this.http.post('http://localhost:8000/envios/getEnviosRemitente/',datos,{
   	headers:headers
   })
   .subscribe(success =>{
@@ -53,25 +53,40 @@ export class SendingListRemitentePage {
 
   verDetallesEnvio(envio){
     this.envio=envio;
-    this.getAnuncio(envio.anuncio).subscribe(
-    (anuncio) => {
-      this.anuncio=anuncio;
-      });
+
+
     this.getOferta(envio.oferta).subscribe(
       (oferta)=>{
         this.oferta=oferta;
         //this.obtenerPosicionCiclista();
 
       });
-    var timer= setTimeout(this.enviarDatosADetalle.bind(this),200);
+
+    this.getAnuncio(envio.anuncio).subscribe(
+    (anuncio) => {
+      this.anuncio=anuncio;
+      });
+
+    this.timer= setInterval(this.enviarDatosADetalle.bind(this),200);
   }
 
 enviarDatosADetalle(){
+
+  if(typeof this.anuncio != 'undefined' && typeof this.oferta != 'undefined')
+  {
+    console.log(this.anuncio);
+    console.log(this.oferta);
+    clearInterval(this.timer);
     this.nav.push(SendingDetailsPage,{
       envio:this.envio,
       anuncio:this.anuncio.anuncio,
       oferta:this.oferta.oferta,
     });
+
+  }
+  else{
+    console.log("No estan definidos");
+  }
 
 }
 
@@ -84,7 +99,7 @@ getAnuncio(id_anuncio){
   headers.append('Content-Type', 'application/x-www-form-urlencoded');
   headers.append('Authorization', 'Token '+token);
   datos="id_anuncio="+id_anuncio;
-  return this.http.post('http://p02diada.pythonanywhere.com/envios/getAnuncioPorId/',datos , {
+  return this.http.post('http://localhost:8000/envios/getAnuncioPorId/',datos , {
     headers: headers
 
   })
@@ -106,7 +121,7 @@ getOferta(id_oferta){
   headers.append('Content-Type', 'application/x-www-form-urlencoded');
   headers.append('Authorization', 'Token '+token);
   datos="id_oferta="+id_oferta;
-  return this.http.post('http://p02diada.pythonanywhere.com/envios/getOfertaPorId/',datos , {
+  return this.http.post('http://localhost:8000/envios/getOfertaPorId/',datos , {
     headers: headers
 
   })
