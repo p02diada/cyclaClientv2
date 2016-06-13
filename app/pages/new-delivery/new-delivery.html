@@ -21,23 +21,13 @@
 </ion-item>
 
 <ion-item>
-  <ion-label floating>Dirección de recogida</ion-label>
+  <ion-label floating>Calle, número, localidad de recogida</ion-label>
   <ion-input type="text" ngControl="direccionInicial"></ion-input>
 </ion-item>
 
 <ion-item>
-  <ion-label floating>Otros datos dirección de recogida (Planta,nº..)</ion-label>
+  <ion-label floating>Otros datos de recogida (Planta,nº..)</ion-label>
   <ion-input type="text" ngControl="datosAdicionalesDireccionRemitente"></ion-input>
-</ion-item>
-
-<ion-item>
-  <ion-label floating>Dirección de entrega</ion-label>
-  <ion-input type="text" ngControl="direccionFinal"></ion-input>
-</ion-item>
-
-<ion-item>
-  <ion-label floating>Otros datos dirección de entrega (Planta,nº..)</ion-label>
-  <ion-input type="text" ngControl="datosAdicionalesDireccionReceptor"></ion-input>
 </ion-item>
 
 <ion-item>
@@ -46,14 +36,28 @@
 </ion-item>
 
 <ion-item>
+  <ion-label floating>Nombre del remitente</ion-label>
+  <ion-input type="text" ngControl="nombreRemitente"></ion-input>
+</ion-item>
+
+<ion-item>
+  <ion-label floating>Calle, número, localidad de entrega</ion-label>
+  <ion-input type="text" ngControl="direccionFinal"></ion-input>
+</ion-item>
+
+<ion-item>
+  <ion-label floating>Otros datos de entrega (Planta,nº..)</ion-label>
+  <ion-input type="text" ngControl="datosAdicionalesDireccionReceptor"></ion-input>
+</ion-item>
+
+
+
+<ion-item>
   <ion-label floating>Teléfono contacto receptor</ion-label>
   <ion-input type="number" minlength="9" maxlength="9" ngControl="telefonoReceptor"></ion-input>
 </ion-item>
 
-<ion-item>
-  <ion-label floating>Nombre del remitente</ion-label>
-  <ion-input type="text" ngControl="nombreRemitente"></ion-input>
-</ion-item>
+
 
 <ion-item>
   <ion-label floating>Nombre del receptor</ion-label>

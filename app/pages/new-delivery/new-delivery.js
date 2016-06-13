@@ -168,7 +168,7 @@ enviarDatosAnuncio(datos){
 
 
 
-  this.http.post('http://localhost:8000/envios/crearAnuncio/',datos , {
+  this.http.post('http://p02diada.pythonanywhere.com/envios/crearAnuncio/',datos , {
       headers: headers
 
     })

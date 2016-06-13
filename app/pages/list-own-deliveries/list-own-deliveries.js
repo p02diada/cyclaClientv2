@@ -27,7 +27,7 @@ export class ListOwnDeliveriesPage {
   var headers= new Headers();
   headers.append('Content-Type', 'application/x-www-form-urlencoded');
   headers.append('Authorization', 'Token '+token);
-  this.http.post('http://localhost:8000/envios/getMisAnuncios/',datos,{
+  this.http.post('http://p02diada.pythonanywhere.com/envios/getMisAnuncios/',datos,{
   	headers:headers
   })
   .subscribe(success =>{

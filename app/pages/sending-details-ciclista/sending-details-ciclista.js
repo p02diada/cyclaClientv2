@@ -47,7 +47,7 @@ export class SendingDetailsCiclistaPage {
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     headers.append('Authorization', 'Token '+token);
 
-   	return this.http.post('http://localhost:8000/envios/getEnviosCiclista/',datos,{
+   	return this.http.post('http://p02diada.pythonanywhere.com/envios/getEnviosCiclista/',datos,{
     	headers:headers
   	})
   	.map(res=>res.json())
@@ -107,7 +107,7 @@ export class SendingDetailsCiclistaPage {
   	var headers= new Headers();
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     headers.append('Authorization', 'Token '+token);
-   	this.http.post('http://localhost:8000/envios/cambiarEstadoEnvio/',datos,{
+   	this.http.post('http://p02diada.pythonanywhere.com/envios/cambiarEstadoEnvio/',datos,{
     	headers:headers
   	})
    	.subscribe(success=>{

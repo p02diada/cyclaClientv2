@@ -52,7 +52,7 @@ export class RegisterPage {
 
     
 
- 	this.http.post('http://localhost:8000/usuarios/registrarRemitente/', 'username='+user.usuario+ '&password=' + user.contraseña, {
+ 	this.http.post('http://p02diada.pythonanywhere.com/usuarios/registrarRemitente/', 'username='+user.usuario+ '&password=' + user.contraseña, {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
       }
@@ -88,7 +88,7 @@ export class RegisterPage {
 
   } else {
 
-      this.http.post('http://localhost:8000/usuarios/registrarCiclista/', 'username='+user.usuario+ '&password=' + user.contraseña, {
+      this.http.post('http://p02diada.pythonanywhere.com/usuarios/registrarCiclista/', 'username='+user.usuario+ '&password=' + user.contraseña, {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
       }

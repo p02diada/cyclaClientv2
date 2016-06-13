@@ -23,7 +23,14 @@
     "cordova-plugin-splashscreen",
     "cordova-plugin-statusbar",
     "ionic-plugin-keyboard",
-    "cordova-plugin-x-toast"
+    "cordova-plugin-x-toast",
+    {
+      "variables": {
+        "SENDER_ID": "cyclaserver"
+      },
+      "locator": "phonegap-plugin-push",
+      "id": "phonegap-plugin-push"
+    }
   ],
   "cordovaPlatforms": [
     "android"

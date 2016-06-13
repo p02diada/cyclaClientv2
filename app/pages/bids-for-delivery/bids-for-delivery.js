@@ -29,7 +29,7 @@ export class BidsForDeliveryPage {
   var headers= new Headers();
   headers.append('Content-Type', 'application/x-www-form-urlencoded');
   headers.append('Authorization', 'Token '+token);
-  this.http.post('http://localhost:8000/envios/getOfertasParaAnuncio/',datos,{
+  this.http.post('http://p02diada.pythonanywhere.com/envios/getOfertasParaAnuncio/',datos,{
   	headers:headers
   })
   .subscribe(success =>{
@@ -58,7 +58,7 @@ export class BidsForDeliveryPage {
     var headers= new Headers();
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     headers.append('Authorization', 'Token '+token); 
-    this.http.post('http://localhost:8000/envios/aceptarOferta/',datos,{
+    this.http.post('http://p02diada.pythonanywhere.com/envios/aceptarOferta/',datos,{
       headers:headers
     })
   .subscribe(success =>{

@@ -10,6 +10,7 @@ import {SendingListRemitentePage} from './pages/sending-list-remitente/sending-l
 import {SendingDetailsCiclistaPage} from './pages/sending-details-ciclista/sending-details-ciclista';
 import {LogoutPage} from './pages/logout/logout';
 import {Http, Headers} from 'angular2/http';
+//import {Push} from 'ionic-native';
 
 @App({
   templateUrl: 'build/app.html',
@@ -49,10 +50,17 @@ export class MyApp {
       if (window.StatusBar) {
         window.StatusBar.styleDefault();
       }
+    };
 
+    /*var push = Push.init({
+      android: {
+        senderID: "cyclaserver"
+      },
 
+});
+    console.log(Push.hasPermission());
 
-    });
+    });*/
   }
 
 
